@@ -73,6 +73,10 @@
       .more-items {
         margin-left: auto;
       }
+      .responsive {
+          width: 100%;
+          height: auto;
+      }
 
       
     </style>
@@ -86,10 +90,10 @@
       
       <div class="header">
         <div class="profile-icon">
-          <img style="width: 100px; height: 100px;" src="https://cdn.iconscout.com/icon/premium/png-512-thumb/profile-2694070-2235987.png?f=webp&w=512" border="0">
+          <img style="width: 70px; height: 70px;" src="https://cdn.iconscout.com/icon/premium/png-512-thumb/profile-2694070-2235987.png?f=webp&w=512" border="0">
         </div>
         <div class="more-items">
-          <img style="width: 50px; height: 50px;" src="https://cdn.iconscout.com/icon/premium/png-512-thumb/more-2081843-1747338.png?f=webp&w=512" border="0" >
+          <img style="width: 35px; height: 35px;" src="https://cdn.iconscout.com/icon/premium/png-512-thumb/more-2081843-1747338.png?f=webp&w=512" border="0" >
         </div>  
       </div>
 
@@ -98,7 +102,7 @@
       
       <div class="div-image">
          <a target="_blank" href ="{{ link[i] }}" >
-         <img id="article-image" style="width: 580px; height: 400px;" src="{{     
+         <img class="responsive" src="{{     
          img_url[i] }}" alt="{{ news[i] }}" >
           <div id="article-title">{{ news[i] }}</div>
          </a>
