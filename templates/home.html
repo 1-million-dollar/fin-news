@@ -1,13 +1,127 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Fin-News</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="60">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+    <title>Finstagram</title>
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      .loop {
+        margin-left: 400px;
+      }
+      
+      .div-image {
+          background-color: lightgray;
+          max-width: 600px;
+          padding: 5px;
+          margin: 10px;
+          margin-bottom: 0px;
+          border: 5px solid gray;
+          border-radius: 15px;
+          display: flex;
+          flex-direction: column;
+          font-size: 24px;
+          font-weight: bold;
+  
+      }
+
+      a {
+        color: black;
+        text-decoration: none !important;
+      }
+
+      .icon-container {
+          max-width: 600px;
+
+      }
+
+      .icons {
+          margin: 5px;
+          margin-top: 0px;
+          padding: 5px;
+          padding-top: 0px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+
+      }
+
+      .icon {
+          margin: 5px;
+      }
+      .bookmark {
+         margin-left: auto;
+      }
+      .header {
+        max-width: 600px;
+        padding: 5px;
+        margin: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 500;
+      }
+      .more-items {
+        margin-left: auto;
+      }
+
+      
+    </style>
+
+
+    
   </head>
   <body>
-    <h1>News</h1>
-    <p>Tata Technologies IPO share allotment expected Tuesday. Here's how you can check status
+    
+    <div class="loop">
+      
+      <div class="header">
+        <div class="profile-icon">
+          <img style="width: 100px; height: 100px;" src="https://cdn.iconscout.com/icon/premium/png-512-thumb/profile-2694070-2235987.png?f=webp&w=512" border="0">
+        </div>
+        <div class="more-items">
+          <img style="width: 50px; height: 50px;" src="https://cdn.iconscout.com/icon/premium/png-512-thumb/more-2081843-1747338.png?f=webp&w=512" border="0" >
+        </div>  
+      </div>
 
-    Read more at:
-    https://economictimes.indiatimes.com/markets/ipos/fpos/tata-technologies-ipo-share-allotment-expected-tuesday-heres-how-you-can-check-status/articleshow/105517066.cms?utm_source=contentofinterest&utm_medium=text&utm_campaign=cppst</p>
+      
+      {% for i in range(l) %}
+      
+      <div class="div-image">
+         <a target="_blank" href ="{{ link[i] }}" >
+         <img id="article-image" style="width: 580px; height: 400px;" src="{{     
+         img_url[i] }}" alt="{{ news[i] }}" >
+          <div id="article-title">{{ news[i] }}</div>
+         </a>
+      </div>
+      
+      <div class="icon-container">
+        <div class="icons">
+          <div class="icon">
+              <img style="width: 24px; height: 24px;" class="like" src="https://cdn-icons-png.flaticon.com/128/1000/1000621.png" >
+          </div>
+          <div class="icon">
+              <img style="width: 24px; height: 24px;" class="comment" src="https://cdn-icons-png.flaticon.com/128/5948/5948565.png?ga=GA1.1.1828885846.1701601592&semt=ais" >     
+          </div>
+          <div class="icon">
+              <img style="width: 24px; height: 24px;" class="share" src="https://cdn-icons-png.flaticon.com/128/2099/2099085.png?ga=GA1.1.1828885846.1701601592&semt=ais" >
+          </div>
+          <div class="bookmark">
+              <img style="width: 24px; height: 24px;" src="https://cdn-icons-png.flaticon.com/128/5688/5688481.png?ga=GA1.1.1828885846.1701601592&semt=ais" >
+          </div>
+      </div>
+    </div>
+      
+      {% endfor %}
+      
+      </div>
   </body>
 </html>

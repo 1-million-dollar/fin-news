@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="10">
+    <title>Fin-News</title>
+    <style>
+      body
+      
+      #list {
+        max-width: 600px;
+        height: 500px;
+        margin: auto;
+        border: 5px solid gray;
+        padding: 5px;
+        background-color: lightgray;
+        font-size:16px;
+        text-align: left;
+        color: green;
+        border-radius: 15px;
+      }
+      .link1 {
+        font-size: 20px;
+        color: black;
+      }
+      img {
+        width: 600px;
+        height: 400px;
+      }
+      a {
+        text-decoration: none !important;
+      }
+  
+    </style>
+  </head>
+  <body>
+    <h1>News</h1>
+    
+    <div>
+      {% for i in range(l) %}
+          <div id="list">
+            <a href ="{{ link[i] }}" class="link1">
+            <img src="{{ img_url[i] }}" alt="{{ news[i]}}" >
+            <div></div>
+            <h2>{{ news[i] }}</h2>
+              </a>
+          </div>
+    
+      {% endfor %}
+      </div>
+    <h1>{{ l }}</h1>
+  </body>
+</html>
