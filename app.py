@@ -50,7 +50,7 @@ for item in list:
       a_tag = heading_tag.find('a')
       news.append(a_tag.text)
       link.append(a_tag.get('href'))
-      page = requests.get(a_tag.get('href'))
+      page = requests.get(a_tag.get('href'), allow_redirects=False)
       soup = BeautifulSoup(page.text, 'html.parser')
       article_image_div = soup.find('div', class_ = "article_image")
       if article_image_div != None:
