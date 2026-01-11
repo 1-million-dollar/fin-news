@@ -12,67 +12,64 @@ def get_news():
     news = []
     link = []
     img_url = []
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
 
     # Economictimes News Articles
     try:
-        url = 'https://economictimes.indiatimes.com/markets'
-        headers = {'User-Agent': 'Mozilla/5.0'}
+        url = 'https://economictimes.indiatimes.com/markets/stocks/news'
         page = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(page.text, 'html.parser')
         
-        u_list = soup.find('ul', class_="newsList")
-        if u_list:
-            items = u_list.find_all('li')
-            for item in items[:10]: # Limit to first 10 for speed
-                a_tag = item.find('a')
-                if a_tag and a_tag.get('href'):
-                    title = a_tag.text.strip()
-                    article_url = a_tag.get('href')
-                    if not article_url.startswith('http'):
-                        article_url = 'https://economictimes.indiatimes.com' + article_url
-                    
-                    news.append(title)
-                    link.append(article_url)
-                    
-                    # Try to get article image
-                    try:
-                        art_page = requests.get(article_url, headers=headers, timeout=5)
-                        art_soup = BeautifulSoup(art_page.text, 'html.parser')
-                        img_tag = art_soup.find('img', class_="img-responsive") or art_soup.find('figure', class_="artImg")
-                        if img_tag:
-                            src = img_tag.get('src') if img_tag.name == 'img' else img_tag.find('img').get('src')
-                            img_url.append(src)
-                        else:
-                            img_url.append(et_logo)
-                    except:
-                        img_url.append(et_logo)
+        # ET often changes structure, looking for common patterns
+        articles = soup.select('div.eachStory') or soup.select('section#pageContent li')
+        
+        for item in articles[:10]:
+            a_tag = item.find('a')
+            if a_tag and a_tag.get('href'):
+                title = a_tag.text.strip()
+                if not title:
+                    img = a_tag.find('img')
+                    if img: title = img.get('alt', '').strip()
+                
+                if not title: continue
+                
+                article_url = a_tag.get('href')
+                if not article_url.startswith('http'):
+                    article_url = 'https://economictimes.indiatimes.com' + article_url
+                
+                news.append(title)
+                link.append(article_url)
+                
+                img_tag = item.find('img')
+                if img_tag and (img_tag.get('data-original') or img_tag.get('src')):
+                    img_url.append(img_tag.get('data-original') or img_tag.get('src'))
+                else:
+                    img_url.append(et_logo)
     except Exception as e:
         print(f"Error fetching ET: {e}")
 
     # MoneyControl News Articles
     try:
         url = 'https://www.moneycontrol.com/news/business/markets/'
-        page = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=10)
+        page = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(page.text, 'html.parser')
         
-        u_list = soup.find('ul', id="cagetory")
-        if u_list:
-            items = u_list.find_all('li')
-            for item in items[:10]:
-                heading = item.find('h2')
-                if heading:
-                    a_tag = heading.find('a')
-                    if a_tag and a_tag.get('href'):
-                        news.append(a_tag.text.strip())
-                        link.append(a_tag.get('href'))
-                        
-                        img_tag = item.find('img')
-                        if img_tag and img_tag.get('data-src'):
-                            img_url.append(img_tag.get('data-src'))
-                        elif img_tag and img_tag.get('src'):
-                            img_url.append(img_tag.get('src'))
-                        else:
-                            img_url.append(mc_logo)
+        items = soup.select('li.clearfix')
+        for item in items[:10]:
+            a_tag = item.find('a')
+            if a_tag and a_tag.get('href'):
+                title = a_tag.get('title') or a_tag.text.strip()
+                if not title: continue
+                
+                news.append(title)
+                link.append(a_tag.get('href'))
+                
+                img_tag = item.find('img')
+                if img_tag:
+                    src = img_tag.get('data-src') or img_tag.get('src')
+                    img_url.append(src if src else mc_logo)
+                else:
+                    img_url.append(mc_logo)
     except Exception as e:
         print(f"Error fetching MC: {e}")
 
